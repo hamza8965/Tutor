@@ -1,0 +1,46 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Study Date Tracker</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; max-width: 350px; margin: auto; }
+        .day { padding: 10px; border: 1px solid #000; cursor: pointer; }
+        .selected { background-color: lightblue; }
+    </style>
+</head>
+<body>
+    <h2>Tutor Study Date Tracker</h2>
+    <label for="month">Select Month:</label>
+    <input type="month" id="month" onchange="generateCalendar()">
+    
+    <div class="calendar" id="calendar"></div>
+    <h3>Total Study Days: <span id="count">0</span></h3>
+
+    <script>
+        function generateCalendar() {
+            let calendar = document.getElementById("calendar");
+            let monthInput = document.getElementById("month").value;
+            let [year, month] = monthInput.split("-");
+            let daysInMonth = new Date(year, month, 0).getDate();
+            calendar.innerHTML = "";
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                let div = document.createElement("div");
+                div.className = "day";
+                div.innerText = day;
+                div.onclick = () => toggleDay(div);
+                calendar.appendChild(div);
+            }
+        }
+
+        function toggleDay(dayElement) {
+            dayElement.classList.toggle("selected");
+            let selectedDays = document.querySelectorAll(".selected").length;
+            document.getElementById("count").innerText = selectedDays;
+        }
+    </script>
+</body>
+</html>
